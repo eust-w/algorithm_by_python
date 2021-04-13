@@ -24,5 +24,7 @@ def int_sequence_search(array: list, target: int) -> int:
 
 if __name__ == '__main__':
     a = [324, 76, 34, 3, 42, 3, 4, 24, 23, 23, 43, 53, 5423, 87, 432, 4, 2, 4, 23, 4]
-    t = 2
-    print(int_sequence_search(array=a, target=t))
+    import random
+    a = list(random.randint(1, 20000) for _ in range(200))
+    for t in a:
+        assert a[int_sequence_search(a, t)] == t

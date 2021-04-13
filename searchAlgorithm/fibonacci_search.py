@@ -26,14 +26,14 @@ def fibonacci_search(array: list, target: int) -> int:
         fib1 = fib2
         fib2 = fib3
         fib3 = fib1 + fib2
-    left = 0
+    left = -1
     while fib3 > 1:
-        mid = left + fib1+1
+        mid = min(left + fib1, len(array) - 1)
         mid_value = array[mid]
         if mid_value == target:
             return mid
         if mid_value < target:
-            left = mid_value
+            left = mid
             anti_fib(1)
         else:
             anti_fib(2)
@@ -41,8 +41,7 @@ def fibonacci_search(array: list, target: int) -> int:
 
 
 if __name__ == '__main__':
-    a = sorted([2, 3, 5, 6, 32, 4, 65, 34, 7, 76, 435, 23, 8, 64, 432, 43])
-    t = 6
-    print(a)
-    print(fibonacci_search(a, t))
-    assert a[fibonacci_search(a, t)] == t
+    import random
+    a = sorted(list(random.randint(1, 20000) for _ in range(500000)))
+    for t in a:
+        assert a[fibonacci_search(a, t)] == t

@@ -20,38 +20,40 @@
 def binary_search_if(array: list, target: int) -> int:
     low = 0
     height = len(array) - 1
-    while low < height:
-        mid = int((low + height) / 2)
+    while low <= height:
+        mid = (low + height) // 2
         mid_value = array[mid]
         if mid_value == target:
             return mid
         if mid_value < target:
-            low = mid
+            low = mid + 1
         else:
-            height = mid
+            height = mid - 1
     return -1
 
 
 def binary_search_recursive(a1: list, t1: int) -> int:
     def inner(array: list, target: int, left: int, right: int) -> int:
-        if left >= right:
-            return -2
-        mid = int((left+right)/2)
+        if left > right:
+            return -1
+        mid = (left+right)//2
         mid_value = array[mid]
         if mid_value == target:
             return mid
         if mid_value < target:
-            left = mid
+            left = mid + 1
         else:
-            right = mid
+            right = mid - 1
         return inner(array, target, left, right)
     return inner(a1, t1, 0, len(a1)-1)
 
 
 if __name__ == '__main__':
-    a_unsorted = [2, 343, 4, 54, 54, 32445, 345, 4, 543, 9, 543, 5435, 43543543, 2343, 432, 43, 6, 8, 8, 5, 78, 90]
-    a = sorted(a_unsorted)
-    t = 5
-    assert a[binary_search_if(a, t)] == t
-    # print(binary_search_if(a, t))
-    assert a[binary_search_recursive(a, t)] == t
+    a = sorted([2, 343, 4, 54,5, 54, 32445, 345, 4, 543, 9, 543, 5435, 43543543, 2343, 432, 43, 6, 8, 8, 5, 78, 90])
+    import random
+    a = sorted(list(random.randint(1, 20000) for _ in range(200)))
+    for t in a:
+        assert a[binary_search_if(a, t)] == t
+        # print(binary_search_if(a, t), ":", a[binary_search_if(a, t)])
+        # print(binary_search_recursive(a, t), ":", a[binary_search_recursive(a, t)])
+        assert a[binary_search_recursive(a, t)] == t

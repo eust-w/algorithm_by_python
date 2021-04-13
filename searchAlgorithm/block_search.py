@@ -43,8 +43,7 @@ def block_search(array: list, target: int, m: int) -> int:
 
 
 if __name__ == '__main__':
-    a = sorted(
-        [2, 34, 56, 4, 5, 8, 7, 6, 34, 656, 45, 7, 324, 657, 342, 65, 675, 432, 546, 3425, 8765, 342, 765, 342, 654,
-         234, 435342, 532434, 54, 67, 34, 8, 4324, 3426, 56, 45, 87, 234, 43, 546, 76, 342, 432, 5674])
-    t = 87
-    assert a[block_search(a, t, 7)] == t
+    import random
+    a = sorted(list(random.randint(1, 20000) for _ in range(200)))
+    for t in a:
+        assert a[block_search(a, t, 7)] == t

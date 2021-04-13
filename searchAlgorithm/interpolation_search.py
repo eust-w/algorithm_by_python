@@ -39,5 +39,7 @@ def interpolation_search(array: list, target: int) -> int:
 
 if __name__ == '__main__':
     a = sorted([3, 34, 56, 8, 5, 6, 9, 2, 3, 83974927, 1, 2, 3, 54])
-    t = 6
-    assert a[interpolation_search(a, t)] == t
+    import random
+    a = sorted(list(random.randint(1, 20000) for _ in range(200)))
+    for t in a:
+        assert a[interpolation_search(a, t)] == t
