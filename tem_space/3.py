@@ -5,3 +5,5 @@
 # @time: 2021/4/13 15:17
 # @file: 3.py
 
+
+print("D".split("D"))
