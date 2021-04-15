@@ -2,7 +2,7 @@
 # encoding: utf-8
 # @author: longtao.wu
 # @contact: eustancewu@gmail.com
-# @time: 2021/4/14 17:13
+# @time: 2021/4/14 08:13
 # @file: grid.py
 
 
@@ -11,11 +11,11 @@ you can set value as a function and anti-dimensional as input para class and dim
 then we get a whole tied project
 """
 
-
 class Node:
     dimensional_num = 0
 
-    def __init__(self, value=None):
+    def __init__(self, value=None, active=False):
+        self.active = active
         self.__setattr__("value", value)
         for _index in range(Node.dimensional_num):
             self.__setattr__("D{}".format(_index + 1), None)
@@ -39,17 +39,9 @@ class Node:
                     _node_pointer = _node_pointer.__getattribute__(_dim_name)
         return _node_pointer
 
-    @property
-    def dim_num(self):
-        return Node.dimensional_num
-
-    @dim_num.setter
-    def dim_num(self, value):
-        pass
-
     def __setattr__(self, key, value, flag=True):
         self.__dict__[key] = value
-        if key == "dim_num":
+        if key == "dimensional_num":
             Node.dimensional_num = value
         key_list = key.split("D")
         if len(key_list) != 2 or not self.is_number(key_list[1]):
@@ -84,15 +76,23 @@ class Node:
     def __getattr__(self, key):
         key_list = key.split("D")
         if len(key_list) != 2:
-            return "can not find this parameter"
+            # return "can not find this parameter"
+            raise AttributeError("{} object has no attribute {}".format(self, key))
         key_num = self.is_number(key_list[1])
         if not key_num:
-            return "can not find this parameter"
+            # return "can not find this parameter"
+            raise AttributeError("{} object has no attribute {}".format(self, key))
         if key_num > Node.dimensional_num:
             return "{} has out of scope, the Largest dimension is {}.".format(key_num, Node.dimensional_num)
         if key_list[0] == "R" or "":
             self.__setattr__(key, None)
             return None
+
+    def __getattribute__(self, item):
+        if item == "dimensional_num":
+            return Node.dimensional_num
+        else:
+            return object.__getattribute__(self, item)
 
 
 if __name__ == '__main__':
@@ -109,7 +109,7 @@ if __name__ == '__main__':
     # print(c.value)
     # print(c.dimensional_num)
     Node.dimensional_num = 5
-    c.dim_num = 6
+    c.dimensional_num = 3
     # print(c.dim_num)
     # print(a.dim_num)
     # print(c.__check())
@@ -118,3 +118,7 @@ if __name__ == '__main__':
     print(a.stack(3, 1).RD8)
     print(a.stack(3, 1).D5)
     print(a.stack(3, 1).value)
+    # print(a.dsf)
+    # print(a.__doc__)
+    # print(dir(a))
+    print(a.__str__())

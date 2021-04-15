@@ -5,5 +5,7 @@
 # @time: 2021/4/13 15:17
 # @file: 3.py
 
-if False < 21:
-    print("sd")
+class A: pass
+
+a = A()
+print(a.dfs)
